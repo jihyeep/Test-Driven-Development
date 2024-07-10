@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct MenuItem {
+struct MenuItem: Identifiable {
+    var id: String { name }
+    
     let category: String
     let name: String
 }
