@@ -30,6 +30,9 @@ final class MenuGroupingTests: XCTestCase {
             MenuItem(category: "pastas", name: "a pasta"),
             MenuItem(category: "desserts", name: "a dessert")
         ]
+        // 무작위 순서 대입
+        .shuffled()
+        
         let sections = groupMenuByCategory(menu)
         XCTAssertEqual(sections.count, 3) // Assert
         
