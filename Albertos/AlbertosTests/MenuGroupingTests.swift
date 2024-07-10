@@ -8,6 +8,12 @@
 import XCTest
 @testable import Albertos
 
+// Index out of range error일 때 nil을 반환
+extension Array {
+  subscript(safe index: Index) -> Element? {
+    0 <= index && index < count ? self[index] : nil
+  }
+}
 
 final class MenuGroupingTests: XCTestCase {
     
@@ -26,7 +32,13 @@ final class MenuGroupingTests: XCTestCase {
         ]
         let sections = groupMenuByCategory(menu)
         XCTAssertEqual(sections.count, 3) // Assert
-
+        
+        XCTAssertEqual(sections[safe: 0]?.category, "pastas")
+        // XCTAssertEqual failed: // ("Optional("")") is not equal to ("Optional("pastas")")
+        XCTAssertEqual(sections[safe: 1]?.category, "drinks")
+        // XCTAssertEqual failed: // ("nil") is not equal to ("Optional("drinks")")
+        XCTAssertEqual(sections[safe: 2]?.category, "desserts")
+        // XCTAssertEqual failed: // ("nil") is not equal to ("Optional("desserts")")
     }
     
     // 비어 있는 섹션은 비어 있어야 함
