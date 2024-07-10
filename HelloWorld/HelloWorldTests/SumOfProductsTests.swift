@@ -14,8 +14,8 @@ struct Product {
 
 func sumOf(_ products: [Product], withCategory category: String) -> Double {
     return products
-        .filter { $0.category == category }
-        .reduce(0.0) { $0 + $1.price }
+        .filter { product in product.category == category }
+        .reduce(0.0) { currentSum, product in  currentSum + product.price }
 }
 
 final class SumOfProductsTests: XCTestCase {
