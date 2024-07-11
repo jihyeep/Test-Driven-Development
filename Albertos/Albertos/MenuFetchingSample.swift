@@ -21,7 +21,7 @@ let menu = [
 
 // 가짜 데이터
 class MenuFetchingSample: MenuFetching {
-    func fetchMenu() -> AnyPublisher<[MenuItem], any Error> {
+    func fetchMenu() -> AnyPublisher<[MenuItem], Error> {
         return Future {
             $0(.success(menu)) // $0: promise
             }
