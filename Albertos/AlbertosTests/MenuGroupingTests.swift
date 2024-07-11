@@ -32,7 +32,7 @@ final class MenuGroupingTests: XCTestCase {
         // XCTAssertEqual failed: // ("nil") is not equal to ("Optional("desserts")")
     }
     
-    // 하나의 카테고리는 하나여야 함
+    // 하나의 카테고리는 하나여야 함 / 카테고리 내 아이템 순서 확인
     func testMenuWithOneCategoryReturnOneSection() throws {
         let menu: [MenuItem] = [
             .fixture(category: "pastas", name: "name"),
