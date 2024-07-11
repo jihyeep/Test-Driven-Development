@@ -19,11 +19,11 @@ let menu = [
     MenuItem(category: "desserts", name: "Crema Catalana", spicy: false)
 ]
 
-
+// 가짜 데이터
 class MenuFetchingSample: MenuFetching {
     func fetchMenu() -> AnyPublisher<[MenuItem], any Error> {
         return Future {
-            $0(.success(menu))
+            $0(.success(menu)) // $0: promise
             }
         .delay(for: 0.5, scheduler: RunLoop.main)
         .eraseToAnyPublisher()
