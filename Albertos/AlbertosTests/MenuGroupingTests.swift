@@ -10,7 +10,7 @@ import XCTest
 
 final class MenuGroupingTests: XCTestCase {
     
-    // 메뉴 아이템이 동일한 카테고리를 갖는 경우, 하나의 섹션으로 구분 / 카테고리 별로 그룹화되고 알파벳 순으로 내림차순 정렬
+    // 메뉴 아이템이 동일한 카테고리를 갖는 경우, 하나의 섹션으로 구분후 알파벳 역순으로 정렬
     func testMenuWithManyCategoriesReturnsOneSectionPerCategoryInReverseAlphabeticalOrder() {
         let menu: [MenuItem] = [
             .fixture(category: "pastas", name: "a pasta"),
@@ -33,8 +33,20 @@ final class MenuGroupingTests: XCTestCase {
     }
     
     // 하나의 카테고리는 하나여야 함
-    func testMenuWithOneCategoryReturnOneSection() {
+    func testMenuWithOneCategoryReturnOneSection() throws {
+        let menu: [MenuItem] = [
+            .fixture(category: "pastas", name: "name"),
+            .fixture(category: "pastas", name: "other name")
+        ]
         
+        let sections = groupMenuByCategory(menu)
+        
+        XCTAssertEqual(sections.count, 1)
+        
+        let section = try XCTUnwrap(sections.first)
+        XCTAssertEqual(section.items.count, 2)
+        XCTAssertEqual(section.items.first?.name, "name")
+        XCTAssertEqual(section.items.last?.name, "other name")
     }
     
     // 비어 있는 섹션은 비어 있어야 함
