@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MenuList: View {
-    let viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
     
     var body: some View {
         switch viewModel.sections {
