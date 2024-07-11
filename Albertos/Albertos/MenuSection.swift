@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MenuSection: Identifiable {
+struct MenuSection: Identifiable, Equatable {
     var id: String { category }
     
     let category: String
