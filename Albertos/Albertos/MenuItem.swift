@@ -12,6 +12,7 @@ struct MenuItem: Identifiable {
     
     let category: String
     let name: String
+    let spicy: Bool
 }
 
 func groupMenuByCategory(_ menu: [MenuItem]) -> [MenuSection] {

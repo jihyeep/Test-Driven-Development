@@ -8,13 +8,6 @@
 import XCTest
 @testable import Albertos
 
-// Index out of range error일 때 nil을 반환
-extension Array {
-  subscript(safe index: Index) -> Element? {
-    0 <= index && index < count ? self[index] : nil
-  }
-}
-
 final class MenuGroupingTests: XCTestCase {
     
     // 하나의 카테고리는 하나여야 함
@@ -25,10 +18,10 @@ final class MenuGroupingTests: XCTestCase {
     // 메뉴 아이템이 동일한 카테고리를 갖는 경우, 하나의 섹션으로 구분
     func testMenuWithOneCategoryReturnOneSection() {
         let menu = [
-            MenuItem(category: "pastas", name: "a pasta"),
-            MenuItem(category: "drinks", name: "a drink"),
-            MenuItem(category: "pastas", name: "a pasta"),
-            MenuItem(category: "desserts", name: "a dessert")
+            MenuItem.fixture(category: "pastas", name: "a pasta"),
+            MenuItem.fixture(category: "drinks", name: "a drink"),
+            MenuItem.fixture(category: "pastas", name: "a pasta"),
+            MenuItem.fixture(category: "desserts", name: "a dessert")
         ]
         // 무작위 순서 대입
         .shuffled()
