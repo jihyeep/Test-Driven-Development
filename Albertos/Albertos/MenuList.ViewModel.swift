@@ -5,12 +5,25 @@
 //  Created by 박지혜 on 7/11/24.
 //
 
+import Combine
+
 extension MenuList {
-    struct ViewModel {
-        let sections: [MenuSection]
+    class ViewModel: ObservableObject{
+        @Published var sections: [MenuSection] = []
         
-        init(menu: [MenuItem], menuGrouping: @escaping ([MenuItem]) -> [MenuSection]) {
-            self.sections = menuGrouping(menu)
-        }
+        private var cancellables = Set<AnyCancellable>()
+                init(
+                    menuFetching: MenuFetching = MenuFetchingSample(),
+                    menuGrouping: @escaping ([MenuItem]) -> [MenuSection] = groupMenuByCategory) {
+                        menuFetching
+                            .fetchMenu()
+                            .sink(
+                                receiveCompletion: { _ in },
+                                receiveValue: { [weak self] value in
+                                    self?.sections = menuGrouping(value)
+                                }
+                            )
+                            .store(in: &cancellables)
+                    }
     }
 }
