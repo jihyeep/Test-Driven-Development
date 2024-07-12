@@ -16,8 +16,8 @@ final class MenuFetcherTests: XCTestCase {
     func testWhenRequestSuccedsPublishesDecodeMenuItems() throws {
         let json = """
                     [
-                        { "name": "a name", "category": "a category", "spicy": true },
-                        { "name": "another name", "category": "a category", "spicy": true }
+                    { "name": "a name", "category": "a category", "spicy": true, "price": 1.0 },
+                    { "name": "another name", "category": "a category", "spicy": true, "price": 1.0 }
                     ]
                     """
         let data = try XCTUnwrap(json.data(using: .utf8))

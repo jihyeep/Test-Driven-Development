@@ -14,7 +14,7 @@ final class MenuItemTests: XCTestCase {
     func testWhenDecodedFromJSONDataHasAllTheInputProperties() throws {
         // Arrange
         /// json object 표준
-        let json = #"{ "name": "a name", "category": "a category", "spicy": true }"#
+        let json = #"{ "name": "a name", "category": "a category", "spicy": true, "price": 1.0 }"#
         let jsonData = try XCTUnwrap(json.data(using: .utf8))
         
         // Act
