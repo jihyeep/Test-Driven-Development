@@ -6,11 +6,12 @@
 //
 
 import Combine
-import HippoPayments
+import SwiftUI
+//import HippoPayments
 
 extension OrderDetail {
 
-    struct ViewModel {
+    class ViewModel: ObservableObject {
 
         let headerText = "Your Order"
         let menuListItems: [MenuItem]
@@ -23,9 +24,18 @@ extension OrderDetail {
         private let orderController: OrderController
         private let paymentProcessor: PaymentProcessing
 
-        init(orderController: OrderController, paymentProcessor: PaymentProcessing) {
+        @Published var alertToShow: Alert.ViewModel?
+
+        private let onAlertDismiss: () -> Void
+
+        private var cancellables = Set<AnyCancellable>()
+
+        init(orderController: OrderController,
+             paymentProcessor: PaymentProcessing,
+             onAlertDismiss: @escaping () -> Void) {
             self.orderController = orderController
             self.paymentProcessor = paymentProcessor
+            self.onAlertDismiss = onAlertDismiss
 
             if orderController.order.items.isEmpty {
                 totalText = .none
@@ -34,12 +44,33 @@ extension OrderDetail {
                 totalText = "Total: $\(String(format: "%.2f", orderController.order.total))"
                 shouldShowCheckoutButton = true
             }
-
             menuListItems = orderController.order.items
         }
 
         func checkout() {
             paymentProcessor.process(order: orderController.order)
+                .sink(
+                    receiveCompletion: { [weak self] completion in
+                        guard case .failure = completion else { return }
+
+                        self?.alertToShow = Alert.ViewModel(
+                            title: "",
+                            message: "There's been an error with your order. Please contact a waiter.",
+                            buttonText: "Ok",
+                            buttonAction: self?.onAlertDismiss
+                        )
+                    },
+                    receiveValue: { [weak self] _ in
+                        self?.alertToShow = Alert.ViewModel(
+                            title: "",
+                            message: "The payment was successful. Your food will be with you shortly.",
+                            buttonText: "Ok",
+                            buttonAction: self?.onAlertDismiss
+                        )
+                    }
+                )
+                .store(in: &cancellables)
+
         }
     }
 }

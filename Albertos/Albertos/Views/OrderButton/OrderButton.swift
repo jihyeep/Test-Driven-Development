@@ -31,7 +31,10 @@ struct OrderButton: View {
             OrderDetail(
                 viewModel: .init(
                     orderController: orderController,
-                    paymentProcessor: paymentProcessor
+                    paymentProcessor: paymentProcessor,
+                    onAlertDismiss: {
+                        self.showingDetail = false
+                    }
                 )
             )
         }
