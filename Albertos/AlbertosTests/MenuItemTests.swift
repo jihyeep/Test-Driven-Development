@@ -26,4 +26,20 @@ final class MenuItemTests: XCTestCase {
         XCTAssertEqual(item.spicy, true)
     }
     
+    func testDecodesFromJSONData() throws {
+        // Arrange
+        // 강제 언래핑 대신 XCTUnwrap 테스트를 통해 확인
+        let url = try XCTUnwrap(
+            Bundle(for: type(of: self)).url(forResource: "menu_item", withExtension: "json")
+        )
+        let data = try Data(contentsOf: url)
+        
+        // Act
+        let item = try JSONDecoder().decode(MenuItem.self, from: data)
+        
+        // Assert
+        XCTAssertEqual(item.name, "a name")
+        XCTAssertEqual(item.category, "a category")
+        XCTAssertEqual(item.spicy, true)
+    }
 }
