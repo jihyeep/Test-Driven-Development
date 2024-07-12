@@ -22,7 +22,11 @@ public class HippoPaymentsProcessor {
     ) {
         let vc = HippoPaymentsConfirmationViewController()
         vc.onDismiss = onSuccess
-        UIApplication.shared.windows.first?.rootViewController?
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+
+        window?.rootViewController?
             .viewControllerPresentationSource.present(vc, animated: true, completion: .none)
     }
 }

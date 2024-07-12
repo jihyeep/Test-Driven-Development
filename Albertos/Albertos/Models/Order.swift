@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Order {
+struct Order: Equatable {
     let items: [MenuItem]
     var total: Double {
         items.reduce(0) { previousReduceValue, currentMenuItem in
