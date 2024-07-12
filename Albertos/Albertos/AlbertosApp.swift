@@ -9,11 +9,14 @@ import SwiftUI
 
 @main
 struct AlbertosApp: App {
+    let orderController = OrderController()
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack {
                 MenuList(viewModel: .init(menuFetching: MenuFetcher(networkFetching: URLSession.shared)))
             }
+            .environmentObject(orderController)
         }
     }
 }

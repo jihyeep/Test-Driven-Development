@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MenuList: View {
+    @EnvironmentObject var orderController: OrderController
     @StateObject var viewModel: ViewModel
     
     var body: some View {
@@ -17,12 +18,19 @@ struct MenuList: View {
                 ForEach(sections) { section in
                     Section(header: Text(section.category)) {
                         ForEach(section.items) { item in
-                            MenuRow(viewModel: .init(item: item))
+                            NavigationLink(value: item, label: {
+                                MenuRow(viewModel: .init(item: item))
+                            })
                         }
                     }
                 }
             }
             .navigationTitle("Alberto's 🇮🇹")
+            .navigationDestination(for: MenuItem.self) { selectedItem in
+                MenuItemDetail(
+                    viewModel: .init(item: selectedItem,
+                                     orderController: orderController))
+            }
         case .failure(let error):
             Text("An error occurred:")
             Text(error.localizedDescription).italic()

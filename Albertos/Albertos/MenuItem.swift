@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MenuItem: Identifiable, Equatable, Codable {
+struct MenuItem: Identifiable, Hashable, Equatable, Codable {
     var id: String { name }
     
     let category: String

@@ -15,6 +15,18 @@ extension MenuItemDetail {
         private let orderController: OrderController
 
         private var cancellables = Set<AnyCancellable>()
+        
+        var name: String {
+            item.name
+        }
+        
+        var spicy: String? {
+            item.spicy ? "🌶" : nil
+        }
+        
+        var price: String {
+            "$\(String(format: "%.2f", item.price))"
+        }
 
         init(item: MenuItem, orderController: OrderController) {
             self.item = item
