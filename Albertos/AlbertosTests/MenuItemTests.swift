@@ -29,10 +29,7 @@ final class MenuItemTests: XCTestCase {
     func testDecodesFromJSONData() throws {
         // Arrange
         // 강제 언래핑 대신 XCTUnwrap 테스트를 통해 확인
-        let url = try XCTUnwrap(
-            Bundle(for: type(of: self)).url(forResource: "menu_item", withExtension: "json")
-        )
-        let data = try Data(contentsOf: url)
+        let data = try dataFromJSONFileNamed("menu_item")
         
         // Act
         let item = try JSONDecoder().decode(MenuItem.self, from: data)
