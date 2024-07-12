@@ -43,7 +43,7 @@ extension MenuItemDetail {
                 .store(in: &cancellables)
         }
 
-        func addOrREmoveFromOrder() {
+        func addOrRemoveFromOrder() {
             if (orderController.order.items.contains { $0 == item }) {
                 orderController.removeFromOrder(item: item)
             } else {

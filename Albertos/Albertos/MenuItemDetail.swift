@@ -24,7 +24,7 @@ struct MenuItemDetail: View {
             Text(viewModel.price)
             
             Button(viewModel.addOrRemoveFromOrderButtonText) {
-                viewModel.addOrREmoveFromOrder()
+                viewModel.addOrRemoveFromOrder()
             }
         }
     }
