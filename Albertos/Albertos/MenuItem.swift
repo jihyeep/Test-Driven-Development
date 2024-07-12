@@ -7,12 +7,31 @@
 
 import Foundation
 
+struct Category: Equatable, Codable {
+    let name: String
+}
+
 struct MenuItem: Identifiable, Equatable, Codable {
     var id: String { name }
-    
-    let category: String
+    var category: String {
+        categoryObject.name
+    }
+    let categoryObject: Category
     let name: String
     let spicy: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case name, spicy
+        case categoryObject = "category"
+    }
+}
+
+extension MenuItem {
+    init(category: String, name: String, spicy: Bool) {
+        self.categoryObject = Category(name: category)
+        self.name = name
+        self.spicy = spicy
+    }
 }
 
 func groupMenuByCategory(_ menu: [MenuItem]) -> [MenuSection] {
